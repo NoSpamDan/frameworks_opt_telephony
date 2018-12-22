@@ -98,6 +98,7 @@ import com.android.internal.telephony.uicc.UiccCardApplication;
 import com.android.internal.telephony.uicc.UiccController;
 import com.android.internal.telephony.uicc.UiccProfile;
 import com.android.internal.telephony.uicc.UiccSlot;
+import com.android.internal.telephony.util.QtiImsUtils;
 import com.android.internal.util.ArrayUtils;
 
 import java.io.FileDescriptor;
@@ -1160,6 +1161,12 @@ public class GsmCdmaPhone extends Phone {
        return (foregroundCallState.isAlive() ||
                 backgroundCallState.isAlive() ||
                 ringingCallState.isAlive());
+    }
+
+    /* Validate the given extras if the call is for CS domain or not */
+    protected boolean shallDialOnCircuitSwitch(Bundle extras) {
+        return (extras != null && extras.getInt(QtiImsUtils.EXTRA_CALL_DOMAIN,
+                QtiImsUtils.DOMAIN_AUTOMATIC) == QtiImsUtils.DOMAIN_CS);
     }
 
     @Override
